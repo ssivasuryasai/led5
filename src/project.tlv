@@ -57,12 +57,14 @@
    
    
              
-   $speed_level[1:0] = >>1$reset ? 2'b0 :  
-               ($right_edge && >>1$led_output == 8'd01) ? 2'd3 :  // Rightmost LED, right button press
+   $speed_level[1:0] = >>1$reset ? 2'b0 :
+               ($right_edge && >>1$led_output == 8'd01) ? >>1$speed_level :  // Rightmost LED, ignore left button
+               ($left_edge && >>1$led_output == 8'd80) ? >>1$speed_level :  // Leftmost LED, ignore right button
                ($right_edge || $left_edge) && (>>1$led_output == 8'd40 || >>1$led_output == 8'd02) ? 2'd2 :
                ($right_edge || $left_edge) && (>>1$led_output == 8'd20 || >>1$led_output == 8'd04) ? 2'd1 :
                ($right_edge || $left_edge) && (>>1$led_output == 8'd10 || >>1$led_output == 8'd08) ? 2'd0 :
                >>1$speed_level;
+
 
    
    
