@@ -57,17 +57,22 @@
    
    
              
-   $speed_level[1:0] = >>1$reset ? 2'b0 :  
-               ($right_edge || ($left_edge && >>1$led_output != 8'd01)) && (>>1$led_output == 8'd80 || >>1$led_output == 8'd01) 
+  $speed_level[1:0] = >>1$reset ? 2'b0 :  
+               (($right_edge && >>1$led_output != 8'd80) || ($left_edge && >>1$led_output != 8'd01)) &&
+               (>>1$led_output == 8'd80 || >>1$led_output == 8'd01)
                   ? 2'd3
-               :  ($right_edge || ($left_edge && >>1$led_output != 8'd01)) && (>>1$led_output == 8'd40 || >>1$led_output == 8'd02)
+               : (($right_edge && >>1$led_output != 8'd80) || ($left_edge && >>1$led_output != 8'd01)) &&
+               (>>1$led_output == 8'd40 || >>1$led_output == 8'd02)
                   ? 2'd2
-               :  ($right_edge || ($left_edge && >>1$led_output != 8'd01)) && (>>1$led_output == 8'd20 || >>1$led_output == 8'd04)
+               : (($right_edge && >>1$led_output != 8'd80) || ($left_edge && >>1$led_output != 8'd01)) &&
+               (>>1$led_output == 8'd20 || >>1$led_output == 8'd04)
                   ? 2'd1
-               :  ($right_edge || ($left_edge && >>1$led_output != 8'd01)) && (>>1$led_output == 8'd10 || >>1$led_output == 8'd08)
+               : (($right_edge && >>1$led_output != 8'd80) || ($left_edge && >>1$led_output != 8'd01)) &&
+               (>>1$led_output == 8'd10 || >>1$led_output == 8'd08)
                   ? 2'd0
                   //default
                   : >>1$speed_level;
+
 
 
 
